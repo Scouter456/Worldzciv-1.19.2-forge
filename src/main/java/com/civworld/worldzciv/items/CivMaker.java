@@ -2,8 +2,7 @@ package com.civworld.worldzciv.items;
 
 import com.civworld.worldzciv.capabilities.CivChunkStats;
 import com.civworld.worldzciv.capabilities.WZCCapabilities;
-import com.civworld.worldzciv.civcodecs.Civ;
-import com.civworld.worldzciv.civcodecs.CivManager;
+import com.civworld.worldzciv.managers.CivManager;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -13,11 +12,9 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.LazyOptional;
-import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 
 import java.util.HashMap;

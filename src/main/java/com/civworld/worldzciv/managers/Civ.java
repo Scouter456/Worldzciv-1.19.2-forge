@@ -1,7 +1,6 @@
-package com.civworld.worldzciv.civcodecs;
+package com.civworld.worldzciv.managers;
 
 import net.minecraft.nbt.CompoundTag;
-import org.checkerframework.checker.units.qual.C;
 
 public class Civ {
 

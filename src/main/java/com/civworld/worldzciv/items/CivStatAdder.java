@@ -1,9 +1,7 @@
 package com.civworld.worldzciv.items;
 
-import com.civworld.worldzciv.capabilities.CivChunkStats;
-import com.civworld.worldzciv.capabilities.WZCCapabilities;
-import com.civworld.worldzciv.civcodecs.Civ;
-import com.civworld.worldzciv.civcodecs.CivManager;
+import com.civworld.worldzciv.managers.Civ;
+import com.civworld.worldzciv.managers.CivManager;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -12,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.LazyOptional;
 
 public class CivStatAdder extends Item {
     public CivStatAdder(Properties pProperties) {

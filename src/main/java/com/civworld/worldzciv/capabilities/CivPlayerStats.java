@@ -1,7 +1,7 @@
 package com.civworld.worldzciv.capabilities;
 
-import com.civworld.worldzciv.civcodecs.Civ;
-import com.civworld.worldzciv.civcodecs.CivManager;
+import com.civworld.worldzciv.managers.Civ;
+import com.civworld.worldzciv.managers.CivManager;
 import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

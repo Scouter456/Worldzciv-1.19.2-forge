@@ -1,7 +1,7 @@
 package com.civworld.worldzciv.events;
 
 import com.civworld.worldzciv.WorldZCiv;
-import com.civworld.worldzciv.civcodecs.BiomeStatsManager;
+import com.civworld.worldzciv.managers.BiomeStatsManager;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

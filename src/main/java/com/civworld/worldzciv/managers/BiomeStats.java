@@ -1,4 +1,4 @@
-package com.civworld.worldzciv.civcodecs;
+package com.civworld.worldzciv.managers;
 
 import com.civworld.worldzciv.WorldZCiv;
 import com.google.gson.*;

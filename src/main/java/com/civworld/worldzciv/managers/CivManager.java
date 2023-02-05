@@ -1,17 +1,12 @@
-package com.civworld.worldzciv.civcodecs;
+package com.civworld.worldzciv.managers;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.openjdk.nashorn.internal.objects.MapIterator;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
