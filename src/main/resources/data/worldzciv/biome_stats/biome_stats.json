@@ -1,0 +1,212 @@
+[{
+  "biomes": "minecraft:plains",
+  "stats": [
+    {
+      "hammers": 1,
+      "beakers": 2,
+      "culture": 3
+    }
+  ]
+},
+  {
+    "biomes": "minecraft:taiga",
+    "stats": [
+      {
+        "hammers": 4,
+        "beakers": 1,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:frozen_river",
+    "stats": [
+      {
+        "hammers": 2,
+        "beakers": 3,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:desert",
+    "stats": [
+      {
+        "hammers": 10,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:the_void",
+    "stats": [
+      {
+        "hammers": 0,
+        "beakers": 10,
+        "culture": 0
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:sunflower_plains",
+    "stats": [
+      {
+        "hammers": 1,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:snowy_plains",
+    "stats": [
+      {
+        "hammers": 1,
+        "beakers": 1,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:ice_spikes",
+    "stats": [
+      {
+        "hammers": 5,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:swamp",
+    "stats": [
+      {
+        "hammers": 10,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:mangrove_swamp",
+    "stats": [
+      {
+        "hammers": 3,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:forest",
+    "stats": [
+      {
+        "hammers": 1,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:flower_forest",
+    "stats": [
+      {
+        "hammers": 2,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:birch_forest",
+    "stats": [
+      {
+        "hammers": 2,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:dark_forest",
+    "stats": [
+      {
+        "hammers": 2,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:old_growth_birch_forest",
+    "stats": [
+      {
+        "hammers": 2,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:old_growth_pine_taiga",
+    "stats": [
+      {
+        "hammers": 2,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:old_growth_spruce_taiga",
+    "stats": [
+      {
+        "hammers": 2,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:snowy_taiga",
+    "stats": [
+      {
+        "hammers": 2,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:savanna",
+    "stats": [
+      {
+        "hammers": 2,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:savanna_plateau",
+    "stats": [
+      {
+        "hammers": 2,
+        "beakers": 2,
+        "culture": 1
+      }
+    ]
+  },
+  {
+    "biomes": "minecraft:windswept_hills",
+    "stats": [
+      {
+        "hammers": 2,
+        "beakers": 2,
+        "culture": -1
+      }
+    ]
+  }
+]
+
