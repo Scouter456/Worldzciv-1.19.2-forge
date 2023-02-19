@@ -44,7 +44,9 @@ public class AttacherCivChunkStats {
 
     public static void attach(final AttachCapabilitiesEvent<LevelChunk> event) {
         LevelChunk levelChunk = event.getObject();
-        final WZCCapabilityProvider provider = new WZCCapabilityProvider();
-        event.addCapability(WZCCapabilityProvider.IDENTIFIER, provider);
+        if(levelChunk instanceof  LevelChunk) {
+            final WZCCapabilityProvider provider = new WZCCapabilityProvider();
+            event.addCapability(WZCCapabilityProvider.IDENTIFIER, provider);
+        }
     }
 }

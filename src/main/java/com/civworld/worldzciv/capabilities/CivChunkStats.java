@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.common.world.ForgeChunkManager;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -34,7 +36,8 @@ public class CivChunkStats implements INBTSerializable<CompoundTag> {
     public int beakers = 0;
     public int culture = 0;
     public String civID = "empty_id";
-
+    public int chunkX;
+    public int chunkZ;
     public boolean statsCalculted = false;
     public boolean wilderness = true;
     private HashMap<ResourceKey<Biome>, Integer> biomeCountInChunk = new HashMap<>();
@@ -48,37 +51,45 @@ public class CivChunkStats implements INBTSerializable<CompoundTag> {
         nbt.putBoolean("statsCalculated", this.statsCalculted);
         nbt.putBoolean("wilderness", this.wilderness);
         nbt.putString("civId", this.civID);
-
+        nbt.putInt("chunkX", this.chunkX);
+        nbt.putInt("chunkZ", this.chunkZ);
         // Serialize biomeCountInChunk map
         ListTag biomeCountInChunkList = new ListTag();
+        int i = 0;
         for (Map.Entry<ResourceKey<Biome>, Integer> entry : biomeCountInChunk.entrySet()) {
             CompoundTag biomeCountInChunkEntry = new CompoundTag();
-            biomeCountInChunkEntry.putString("biomeKey", entry.getKey().toString());
-            biomeCountInChunkEntry.putInt("count", entry.getValue());
+            biomeCountInChunkEntry.putString("biomeKey"+i, entry.getKey().location().toString());
+            biomeCountInChunkEntry.putInt("count"+i, entry.getValue());
             biomeCountInChunkList.add(biomeCountInChunkEntry);
+            i++;
         }
         nbt.put("biomeCountInChunk", biomeCountInChunkList);
-
+        LOGGER.info("nbt ser " + nbt);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
+
+        LOGGER.info("nbt des " + nbt);
+
         this.hammers = nbt.getInt("hammers");
         this.beakers = nbt.getInt("beakers");
+        this.chunkX = nbt.getInt("chunkX");
+        this.chunkZ = nbt.getInt("chunkZ");
         this.culture = nbt.getInt("culture");
         this.statsCalculted = nbt.getBoolean("statsCalculated");
         this.wilderness = nbt.getBoolean("wilderness");
         this.civID = nbt.getString("civId");
 
         // Deserialize biomeCountInChunk map
-        ListTag biomeCountInChunkList = nbt.getList("biomeCountInChunk", 10);
-        for (int i = 0; i < biomeCountInChunkList.size(); i++) {
-            CompoundTag biomeCountInChunkEntry = biomeCountInChunkList.getCompound(i);
-            ResourceKey<Biome> biomeKey = ForgeRegistries.BIOMES.getHolder(new ResourceLocation(biomeCountInChunkEntry.getString("biomeKey"))).get().unwrapKey().get();
-            int count = biomeCountInChunkEntry.getInt("count");
-            biomeCountInChunk.put(biomeKey, count);
-        }
+       ListTag biomeCountInChunkList = nbt.getList("biomeCountInChunk", Tag.TAG_COMPOUND);
+       for (int i = 0; i < biomeCountInChunkList.size(); i++) {
+           CompoundTag biomeCountInChunkEntry = biomeCountInChunkList.getCompound(i);
+           ResourceKey<Biome> biomeKey = ForgeRegistries.BIOMES.getHolder(new ResourceLocation(biomeCountInChunkEntry.getString("biomeKey"+i))).get().unwrapKey().get();
+           int count = biomeCountInChunkEntry.getInt("count"+i);
+           biomeCountInChunk.put(biomeKey, count);
+       }
     }
 
     public static void tellStats(TickEvent.PlayerTickEvent event){
@@ -94,11 +105,13 @@ public class CivChunkStats implements INBTSerializable<CompoundTag> {
             serverPlayer.sendSystemMessage(Component.literal("The chunk has the following biomes " + capability.biomeCountInChunk));
             serverPlayer.sendSystemMessage(Component.literal("This chunk is owned by " + capability.civID));
             serverPlayer.sendSystemMessage(Component.literal("This chunk is wilderness " + capability.wilderness));
+
         });
 
         if(serverPlayer.getLevel().getBlockState(serverPlayer.blockPosition().below()).is(Blocks.DIAMOND_BLOCK)){
             reCalculateStats(civChunkStatsLazyOptional);
         }
+
     }
 
     public static void reCalculateStats(LazyOptional<CivChunkStats> civChunkStatsLazyOptional){
@@ -116,7 +129,6 @@ public class CivChunkStats implements INBTSerializable<CompoundTag> {
         if(event.getPlayer().level.isClientSide || !(event.getPlayer() instanceof ServerPlayer serverPlayer)) return;
         ServerLevel level = serverPlayer.getLevel();
         LevelChunk levelChunk = level.getChunkAt(serverPlayer.blockPosition());
-
 
     }
 
@@ -164,10 +176,15 @@ public class CivChunkStats implements INBTSerializable<CompoundTag> {
                     capability.hammers = capability.hammers + determineHammerValues(biome, biomeStatsMap.get(biome));
                     capability.beakers = capability.beakers + determineBeakerValues(biome, biomeStatsMap.get(biome));
                     capability.culture = capability.culture + determineCultureValues(biome, biomeStatsMap.get(biome));
+                    capability.chunkX = levelChunk.getPos().x;
+                    capability.chunkZ = levelChunk.getPos().z;
                 } catch (Exception e) {
                     LOGGER.error("Error: Failed to calculate values for biome " + biome + " due to " + e.getMessage());
                 }
             }
+
+            ((ServerLevel) level).setChunkForced(levelChunk.getPos().x, levelChunk.getPos().z, true);
+            //levelChunk.markPosForPostprocessing(pos.getWorldPosition());
 
             capability.statsCalculted = true;
         });
@@ -190,7 +207,7 @@ public class CivChunkStats implements INBTSerializable<CompoundTag> {
             BlockPos blockPos = new BlockPos(chunkPos.getMinBlockX(), levelAccessor.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, chunkPos.getMinBlockX(), chunkPos.getMinBlockZ()) ,chunkPos.getMinBlockZ());
             for(int x = 0; x < 16; x ++){
                 for(int z = 0; z < 16; z++){
-                    //levelAccessor.setBlock(blockPos.offset(x,0,z), Blocks.DIAMOND_BLOCK.defaultBlockState(), 3);
+                    levelAccessor.setBlock(blockPos.offset(x,0,z), Blocks.DIAMOND_BLOCK.defaultBlockState(), 3);
                     ResourceKey<Biome> biome = levelAccessor.getBiome(blockPos.offset(x,0,z)).unwrapKey().get();
                     biomeCounts.merge(biome, 1, Integer::sum);
                 }

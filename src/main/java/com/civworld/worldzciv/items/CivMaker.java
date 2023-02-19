@@ -1,5 +1,6 @@
 package com.civworld.worldzciv.items;
 
+import com.civworld.worldzciv.WorldZCiv;
 import com.civworld.worldzciv.capabilities.CivChunkStats;
 import com.civworld.worldzciv.capabilities.WZCCapabilities;
 import com.civworld.worldzciv.managers.CivManager;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.common.world.ForgeChunkManager;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
@@ -54,6 +56,11 @@ public class CivMaker  extends Item {
                     capability.civID = "CrazyCiv";
                     capability.wilderness = false;
                 });
+                //((ServerLevel) serverLevel).setChunkForced(chunkPos.x, chunkPos.z, true);
+
+                ForgeChunkManager.forceChunk(serverLevel, WorldZCiv.MODID, serverPlayer.getUUID(), chunkPos.x, chunkPos.z, true, false);
+                serverLevel.getDataStorage().save();
+                //serverLevel.getChunk(chunkPos.x, chunkPos.z).setUnsaved(true);
             }
         }
 
